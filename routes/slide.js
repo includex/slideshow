@@ -3,7 +3,7 @@ var fs = require('fs');
 
 
 var router = express.Router();
-var TOOL_PATH = "/Users/includex/tool";
+var TOOL_PATH = "/Users/includex/WebstormProjects/slide/bin";
 var STORAGE_PATH = "/Users/includex/WebstormProjects/slide/files"
 
 /* GET home page. */
@@ -48,19 +48,11 @@ router.post('/create', function(req, res, next) {
             }
 
             var exec = require('child_process').exec;
-            //new run_cmd('java -jar ' + TOOL_PATH + '/pdfbox-app-1.8.9.jar PDFToImage ' + inputpath);
-
-            exec ('java -jar ' + TOOL_PATH + '/pdfbox-app-1.8.9.jar PDFToImage ' + filepath, function(){
+            exec ('java -jar ' + TOOL_PATH + '/pdfbox-app-1.8.9.jar PDFToImage ' + filepath + ' &>/dev/null',{'timeout':20000}, function(){
                 res.send('' +skey);
             });
-
-            //pdfToImage(filepath);
-
-
         });
     });
-
-
 
     return false;
 });
@@ -74,7 +66,7 @@ function run_cmd(cmd, args) {
 function pdfToImage(inputpath){
     var exec = require('child_process').exec;
     //new run_cmd('java -jar ' + TOOL_PATH + '/pdfbox-app-1.8.9.jar PDFToImage ' + inputpath);
-
+    console.log('java -jar ' + TOOL_PATH + '/pdfbox-app-1.8.9.jar PDFToImage ' + inputpath);
     exe ('java -jar ' + TOOL_PATH + '/pdfbox-app-1.8.9.jar PDFToImage ' + inputpath, function(){
 
     });

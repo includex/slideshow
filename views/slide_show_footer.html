@@ -3,12 +3,16 @@
 
 <script src="/socket.io/socket.io.js"></script>
 
+<script src="//cdn.webrtc-experiment.com/RecordRTC.js"></script>
 <script>
     window.isMaster = false;
-    var socket = io.connect('http://192.168.100.34:3000');
+    var socket = io.connect('http://172.20.10.4:30000');
+    window.list = [];
+
 
     shower.onChangeListener = function(older, newer){
         if(window.isMaster === true) {
+            list.push({'time':Date.now() - startAtTime, 'slide' : newer});
             socket.emit('fromclient', {msg: '' + newer});
         }
     };
@@ -20,14 +24,102 @@
         }
     });
 
+    function play(){
+        window.open(url);
+        startAtTime = Date.now();
+        window.isMaster = false;
+
+        setInterval(function(){
+            var index = 1;
+            for(var i = 0; i < list.length; i ++){
+                if( list[i].time > Date.now() - startAtTime ){
+                    break;
+                }
+
+                console.log(list[i].time + ":" + (Date.now() - startAtTime );
+                index = i;
+            }
+            if( shower.getCurrentSlideNumber() !== index){
+                shower.go(i);
+            }
+
+        }, 500);
+    }
+
+
     socket.on('sign',function(data){
         console.log(data.msg);
     });
 
+    var url = "";
+//    var recordRTC = RecordRTC(mediaStream);
+    var startAtTime = 0;
     function takeMaster(){
         window.isMaster = true;
+        if(window.rec === false) {
+            startAtTime = Date.now();
+            startRecording();
+            window.rec = true;
+//            recordRTC.startRecording();
+        }else{
+            window.isMaster = false;
+            recorder.stopRecording(function(audioURL) {
+                window.open(audioURL);
+                url = audioURL;
+                startAtTime = Date.now();
+                console.log(window.list);
+            });
+        }
     }
+
+
+//    var saveData = (function () {
+//        var a = document.createElement("a");
+//        document.body.appendChild(a);
+//        a.style = "display: none";
+//        return function (data, fileName) {
+//            var json = JSON.stringify(data),
+//                    blob = new Blob([json], {type: "octet/stream"}),
+//                    url = window.URL.createObjectURL(blob);
+//            a.href = url;
+//            a.download = fileName;
+//            a.click();
+//            window.URL.revokeObjectURL(url);
+//        };
+//    }());
+//
+//    var data = { x: 42, s: "hello, world", d: new Date() },
+//            fileName = "my-download.json";
+//
+//    saveData(data, fileName);
+
+
+
+    function startRecording(){
+        navigator.getUserMedia({ audio: true, video: false}, function(stream) {
+            if (window.IsChrome) stream = new window.MediaStream(stream.getAudioTracks());
+            audioStream = stream;
+
+            // "audio" is a default type
+            window.recorder = window.RecordRTC(stream, {
+                type: 'audio',
+                bufferSize: 16384,
+                sampleRate: 44100,
+                leftChannel: false,
+                disableLogs: false
+            });
+            recorder.startRecording();
+        }, function() {});
+    }
+
+    window.rec = false;
+
 </script>
+
+
+
+
+
 
 </body>
 </html>
