@@ -3,12 +3,12 @@ var fs = require('fs');
 
 
 var router = express.Router();
-var TOOL_PATH = "/Users/includex/WebstormProjects/slide/bin";
-var STORAGE_PATH = "/Users/includex/WebstormProjects/slide/files"
+var TOOL_PATH = "/Users/Justin/workspace/sandbox/slideshow/bin";
+var STORAGE_PATH = "/Users/Justin/workspace/sandbox/slideshow/files"
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('slide_create', { title: 'Create Slide' });
+    res.render('slide_create.ejs', { title: 'Create Slide' });
 });
 
 router.get('/show/:id', function(req, res, next) {

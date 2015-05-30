@@ -6,44 +6,52 @@
     <meta name="viewport" content="width=792, user-scalable=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link rel="stylesheet" href="http://shwr.me/shower/themes/ribbon/styles/screen.css">
+    <link href="/public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="/public/javascripts/qrcode.js"></script>
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script src="/public/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body class="list">
 <header class="caption">
-    <h1>Slide Show</h1>
+    <h1>Dujavu</h1>
+
     <p>Preview</p>
 </header>
 
-<section class="slide"><div>
-    <a id="kakao-link-btn" href="javascript:takeMaster()">
-        <img style="width:50px;height:50px;" src="http://dn.api1.kage.kakao.co.kr/14/dn/btqa9B90G1b/GESkkYjKCwJdYOkLvIBKZ0/o.jpg" />
-    </a>
+<section class="slide">
 
-    <a  href="javascript:play()">
-        <img style="width:50px;height:50px;" src="http://dn.api1.kage.kakao.co.kr/14/dn/btqa9B90G1b/GESkkYjKCwJdYOkLvIBKZ0/o.jpg" />
-    </a>
+     <div>
+         <a id="kakao-link-btn" href="javascript:takeMaster()">
+             <span class="glyphicon glyphicon-record"></span>
+         </a>
 
-    <center>
+         <a href="javascript:play()">
+             <span class="glyphicon glyphicon-play-circle"></span>
+         </a>
+     </div>
+
+    <div align="center">
         <div id="qrcode"></div>
         <br/>
+
         <h1 id="link"></h1>
-    </center>
 
-    <script type="text/javascript">
-        new QRCode(document.getElementById("qrcode"), location.href);
-        document.getElementById("link").innerText = location.href;
-    </script>
 
-    <script>
-        // 사용할 앱의 Javascript 키를 설정해 주세요.
-        Kakao.init('YOUR APP KEY');
+        <script type="text/javascript">
+            new QRCode(document.getElementById("qrcode"), location.href);
+            document.getElementById("link").innerText = location.href;
+        </script>
 
-        function sendLink() {
-            Kakao.Link.sendTalkLink({
-                label: '안녕하세요, 꽃다운 ' + Math.floor(Math.random()*(70)+ 15) + '살 개발자입니다.'
-            });
-        }
-    </script>
+        <script>
+            // 사용할 앱의 Javascript 키를 설정해 주세요.
+            Kakao.init('YOUR APP KEY');
 
-</div></section>
+            function sendLink() {
+                Kakao.Link.sendTalkLink({
+                    label: '안녕하세요, 꽃다운 ' + Math.floor(Math.random() * (70) + 15) + '살 개발자입니다.'
+                });
+            }
+        </script>
+
+    </div>
+</section>
