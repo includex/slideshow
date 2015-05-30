@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+<script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+<div id="elem_dropzone" class="dropzone">
+
+</div>
+<script>
+      Dropzone.autoDiscover = false;
+      var myDropzone = new Dropzone("div#elem_dropzone", { url: "/slide/create"});
+
+      myDropzone.on('success', function(e, res){
+            window.open("/slide/show/"+res);
+      });
+</script>
+
+<!--<form id        =  "uploadForm"-->
+      <!--enctype   =  "multipart/form-data"-->
+      <!--action    =  "/slide/create"-->
+      <!--class="dropzone"-->
+      <!--method    =  "post">-->
+<!--</form>-->

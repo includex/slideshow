@@ -1,0 +1,33 @@
+<div class="progress"><div></div></div>
+<script src="/public/javascripts/shower.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+    window.isMaster = false;
+    var socket = io.connect('http://192.168.100.34:3000');
+
+    shower.onChangeListener = function(older, newer){
+        if(window.isMaster === true) {
+            socket.emit('fromclient', {msg: '' + newer});
+        }
+    };
+
+    socket.on('toclient',function(data){
+        console.log(data.msg);
+        if(window.isMaster === false){
+            shower.go(parseInt(data.msg));
+        }
+    });
+
+    socket.on('sign',function(data){
+        console.log(data.msg);
+    });
+
+    function takeMaster(){
+        window.isMaster = true;
+    }
+</script>
+
+</body>
+</html>

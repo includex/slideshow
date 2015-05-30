@@ -1,0 +1,8 @@
+include slide_show_header.html
+
+each index in slides
+    section(class='slide')
+        div
+            img(style='width:100%;height:100%;', src='/files/' + slideid + '/' + index + '.jpg')
+
+include slide_show_footer.html
