@@ -67,7 +67,6 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-
 var server = app.listen(30000, function(){
   var host = server.address().address;
   var port = server.address().port;
@@ -80,11 +79,9 @@ server.timeout = 20000;
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection',function(socket){
-  console.log('Message from client');
   socket.emit('sign',{msg:'Welcome !'});
   socket.on('fromclient',function(data){
     socket.broadcast.emit('toclient',data); // 자신을 제외하고 다른 클라이언트에게 보냄
-    socket.emit('toclient',data); // 해당 클라이언트에게만 보냄. 다른 클라이언트에 보낼려면?
-    console.log('Message from client :'+data.msg);
+    socket.emit('toclient',data);
   })
 });

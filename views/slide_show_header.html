@@ -36,12 +36,16 @@
     </script>
 
     <script>
-        // 사용할 앱의 Javascript 키를 설정해 주세요.
-        Kakao.init('YOUR APP KEY');
+        Kakao.init('');
 
         function sendLink() {
-            Kakao.Link.sendTalkLink({
-                label: '안녕하세요, 꽃다운 ' + Math.floor(Math.random()*(70)+ 15) + '살 개발자입니다.'
+            Kakao.Link.createTalkLinkButton({
+              container: '#kakao-link-btn',
+              label: 'Presentation share',
+              webButton: {
+                text: 'Presentation share',
+                url: location.href
+              }
             });
         }
     </script>
